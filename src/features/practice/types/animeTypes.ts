@@ -1,5 +1,13 @@
 // Tipos para la respuesta de la API de anime
 
+export type SearchParams = {
+	q?: string;
+	page: string;
+	limit?: string;
+	order_by?: string;
+	genre?: string;
+	sort?: 'asc' | 'desc' | '';
+};
 export interface AnimeApiResponse {
 	pagination: AnimePagination;
 	data: Anime[];

@@ -1,31 +1,28 @@
 'use client';
 
-import { BackButton } from '@/app/components/BackButton';
-// import { LinkButton } from '@/app/components/LinkButton';
-import { Anime, AnimeApiResponse } from '@/app/types/anime.type';
+import { BackButton } from '@/components/BackButton';
+import { fetchAnimeById } from '@/features/practice/services/animeService';
+import { Anime } from '@/features/practice/types/animeTypes';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function Page() {
+export default function AnimeDetailsPage() {
 	const { id } = useParams();
 	const [anime, setAnime] = useState<Anime | null>(null);
-	const [isLoading, setIsloading] = useState(true);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
 
 	useEffect(() => {
 		if (!id) return;
-		setIsloading(true);
-		fetch(`https://api.jikan.moe/v4/anime/${id}`)
-			.then((res) => res.json())
-			.then((res: { data: Anime }) => {
-				setAnime(res.data);
-			})
-			.catch((error) => setError(error))
-			.finally(() => setIsloading(false));
+		setLoading(true);
+		fetchAnimeById(String(id))
+			.then(setAnime)
+			.catch((error) => setError(error.message))
+			.finally(() => setLoading(false));
 	}, [id]);
 
-	if (isLoading) return <div>Cargando...</div>;
+	if (loading) return <div>Cargando...</div>;
 	if (error) return <div>{error.message}</div>;
 	if (!anime) return <div>Ocurrio un error inesperado</div>;
 
@@ -52,6 +49,8 @@ export default function Page() {
 					</div>
 					<p className=' text-pretty text-md'>{anime.synopsis}</p>
 					<div className='flex justify-between mt-auto'>
+						<span>Nota: {anime.score ? `⭐${anime.score}` : 'desconocida'}</span>
+
 						<span>
 							Fecha:{' '}
 							{anime.aired.from
@@ -62,7 +61,6 @@ export default function Page() {
 								  })
 								: 'desconocida'}
 						</span>
-						<span>Nota: {anime.score ? `⭐${anime.score}` : 'desconocida'}</span>
 					</div>
 				</div>
 			</article>

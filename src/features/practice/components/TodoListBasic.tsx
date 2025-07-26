@@ -7,7 +7,7 @@ export type Task = {
 	text: string;
 };
 
-export const TodoList = (): JSX.Element => {
+export const TodoListBasic = (): JSX.Element => {
 	const [todos, setTodos] = useState<Task[]>([]);
 	const [text, setText] = useState('');
 

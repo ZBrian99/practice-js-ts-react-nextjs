@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { FeatureProvider } from '@/context/featureContext';
+import { Navbar } from '@/components/Navbar';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -12,8 +14,13 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en' className='overflow-y-scroll'>
-			<body>{children}</body>
+		<html lang='en'>
+			<body>
+				<FeatureProvider>
+					<Navbar />
+					{children}
+				</FeatureProvider>
+			</body>
 		</html>
 	);
 }
