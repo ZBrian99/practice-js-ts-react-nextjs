@@ -31,6 +31,15 @@ export type TodoAction =
 	| { type: 'TOGGLE_TODO'; payload: string }
 	| { type: 'DELETE_TODO'; payload: string };
 
+export type SelectedTodoAction =
+	| {
+			type: 'SELECTED_TODO';
+			payload: Todo;
+	  }
+	| {
+			type: 'CLEAR_SELECTED_TODO';
+	  };
+
 export type TagAction =
 	| { type: 'SET_TAGS'; payload: TodoTag[] }
 	| { type: 'ADD_TAG'; payload: TodoTag }
@@ -38,9 +47,10 @@ export type TagAction =
 
 export type FeatureState = {
 	todos: Todo[];
+	selectedTodo: Todo | null;
 	tags: TodoTag[];
 	form: FormState;
 	ui: UIState;
 };
 
-export type FeatureAction = UIAction | FormAction<TodoForm> | TodoAction | TagAction;
+export type FeatureAction = UIAction | FormAction<TodoForm> | TodoAction | SelectedTodoAction | TagAction;

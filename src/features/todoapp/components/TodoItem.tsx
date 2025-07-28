@@ -1,13 +1,14 @@
 'use client';
 
-import React from 'react';
-import { TodoItemProps, TodoPriority } from '../type/todoTypes';
+import React, { MouseEvent } from 'react';
+import { Todo, TodoItemProps, TodoPriority } from '../type/todoTypes';
+import { useFeatureContext } from '@/context/featureContext';
 
 const priorityColors: Record<TodoPriority, { text: string; bg: string; border: string }> = {
 	ninguna: {
 		text: 'text-gray-200',
 		bg: 'bg-gray-800',
-		border: 'border-gray-700',
+		border: 'border-gray-500',
 	},
 	baja: {
 		text: 'text-green-300',
@@ -31,26 +32,56 @@ const priorityColors: Record<TodoPriority, { text: string; bg: string; border: s
 	},
 };
 
-export const TodoItem = React.memo(({ todo, handleCompleted }: TodoItemProps) => {
+// export const TodoItem = React.memo(({ todo }: TodoItemProps) => {
+export const TodoItem = React.memo(({ todo, handleCompleted, handleTodoClick }: TodoItemProps) => {
+	// const handleOpenDetails = (e: MouseEvent<HTMLDivElement>, todo: Todo) => {
+	// 	if ((e.target as HTMLElement).closest('.todo-item-check')) return;
+	// 	if (todo.id === state.selectedTodo?.id) {
+	// 		// setSelectedTodo(null);
+	// 		dispatch({ type: 'TODO_VIEW', payload: !state.ui.isTodoView });
+	// 	} else {
+	// 		// setSelectedTodo(todo);
+	// 		dispatch({ type: 'SELECTED_TODO', payload: todo });
+	// 		dispatch({ type: 'TODO_VIEW', payload: true });
+	// 	}
+	// };
+
 	return (
 		<div
-			className={`border-2 ${todo.completed && 'opacity-50'} ${
-				priorityColors[todo.priority].border
-			} rounded p-4 w-full `}
+			// onClick={(e) => {
+			// 	if ((e.target as HTMLElement).closest('.todo-item-check')) return;
+			// 	if (todo.id === state.selectedTodo?.id) {
+			// 		// setSelectedTodo(null);
+			// 		dispatch({ type: 'TODO_VIEW', payload: !state.ui.isTodoView });
+			// 	} else {
+			// 		// setSelectedTodo(todo);
+			// 		dispatch({ type: 'SELECTED_TODO', payload: todo });
+			// 		dispatch({ type: 'TODO_VIEW', payload: true });
+			// 	}
+			// }}
+			onClick={(e) => {
+				handleTodoClick(todo, e);
+			}}
+			className={`todo-item ${todo.completed && 'opacity-50'} ${priorityColors[todo.priority].border}
+       border-2  rounded p-4 w-full `}
 		>
 			<div
 				className={`flex items-center mb-2 gap-2 border-b-2 pb-2 ${priorityColors[todo.priority].border}
 				}`}
 			>
-				<label className='flex gap-2 cursor-pointer'>
+				<label className='todo-item-check gap-2 cursor-pointer'>
 					<input
 						type='checkbox'
 						checked={todo.completed}
+						// onChange={() => {
+						// 	dispatch({ type: 'TOGGLE_TODO', payload: todo.id });
+						// 	// dispatch({ type: 'TODO_VIEW', payload: false });
+						// }}
 						onChange={() => handleCompleted(todo.id)}
 						className='peer hidden'
 					/>
 					<div
-						className={`w-5 h-5 p-3  border-2 ${
+						className={` w-5 h-5 p-3  border-2 ${
 							priorityColors[todo.priority].border
 						}  font-bold  rounded-sm   flex text-center justify-center items-center `}
 					>

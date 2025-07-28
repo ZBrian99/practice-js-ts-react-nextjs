@@ -4,6 +4,7 @@ import {
 	FeatureState,
 	FormAction,
 	FormState,
+	SelectedTodoAction,
 	TagAction,
 	TodoAction,
 	UIAction,
@@ -20,8 +21,6 @@ export const initialFormState: TodoForm = {
 	completed: false,
 };
 
-
-
 export const formReducer = (state: FormState, action: FormAction<TodoForm>): FormState => {
 	switch (action.type) {
 		case 'SET_FIELD':
@@ -33,7 +32,7 @@ export const formReducer = (state: FormState, action: FormAction<TodoForm>): For
 		case 'SET_ALL_ERRORS':
 			return { ...state, errors: action.errors };
 		case 'RESET':
-			return { values: initialFormState, errors: {}, touched: {} };
+			return { ...state, values: initialFormState, errors: {}, touched: {} };
 		default:
 			return state;
 	}
@@ -44,7 +43,7 @@ export const todoReducer = (state: Todo[], action: TodoAction): Todo[] => {
 		case 'SET_TODOS':
 			return [...action.payload];
 		case 'ADD_TODO':
-			return [...state, action.payload];
+			return [action.payload, ...state];
 		case 'UPDATE_TODO':
 			return state.map((t) => {
 				return t.id !== action.payload.id ? t : { ...t, ...action.payload };
@@ -53,6 +52,17 @@ export const todoReducer = (state: Todo[], action: TodoAction): Todo[] => {
 			return state.map((t) => (t.id !== action.payload ? t : { ...t, completed: !t.completed }));
 		case 'DELETE_TODO':
 			return state.filter((t) => t.id !== action.payload);
+		default:
+			return state;
+	}
+};
+
+export const selectedTodoReducer = (state: Todo | null, action: SelectedTodoAction) => {
+	switch (action.type) {
+    case 'SELECTED_TODO':
+			return action.payload;
+		case 'CLEAR_SELECTED_TODO':
+			return null;
 		default:
 			return state;
 	}
@@ -87,6 +97,7 @@ export const uiReducer = (state: UIState, action: UIAction): UIState => {
 export const featureReducer = (state: FeatureState, action: FeatureAction): FeatureState => {
 	return {
 		todos: todoReducer(state.todos, action as TodoAction),
+		selectedTodo: selectedTodoReducer(state.selectedTodo, action as SelectedTodoAction),
 		tags: tagReducer(state.tags, action as TagAction),
 		form: formReducer(state.form, action as FormAction<TodoForm>),
 		ui: uiReducer(state.ui, action as UIAction),

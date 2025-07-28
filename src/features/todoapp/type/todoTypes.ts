@@ -1,6 +1,10 @@
+import { ChangeEvent, MouseEvent } from 'react';
+
 export interface TodoItemProps {
 	todo: Todo;
 	handleCompleted: (id: string) => void;
+	handleTodoClick: (id: Todo, e: MouseEvent<HTMLDivElement>) => void;
+	// handleOpenDetails: (e: MouseEvent<HTMLDivElement>, todo: Todo) => void;
 }
 
 export interface TodoTag {
