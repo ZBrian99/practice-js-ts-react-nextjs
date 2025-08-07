@@ -1,9 +1,5 @@
 ---
 
-¡Perfecto! Me alegra que el plan te sirva. La disciplina y un roadmap claro son tus mejores aliados en este sprint de 3 meses. Aquí tienes el resumen y roadmap condensado para que lo tengas como referencia constante.
-
----
-
 ## Roadmap de 3 Meses para Next.js y Empleabilidad
 
 Este roadmap está diseñado para maximizar tu aprendizaje, construir un portfolio impactante y prepararte para el mercado laboral argentino en un plazo ajustado. La clave es la **ejecución precisa y la flexibilidad en el alcance de las features más grandes.**

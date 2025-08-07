@@ -1,10 +1,11 @@
-import { ChangeEvent, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 
 export interface TodoItemProps {
 	todo: Todo;
 	handleCompleted: (id: string) => void;
 	handleTodoClick: (id: Todo, e: MouseEvent<HTMLDivElement>) => void;
-	// handleOpenDetails: (e: MouseEvent<HTMLDivElement>, todo: Todo) => void;
+	handleEditTodo: (todo: Todo) => void;
+	handleDeleteTodo: (id: string) => void;
 }
 
 export interface TodoTag {
@@ -41,4 +42,26 @@ export type TodoForm = {
 	tags: TodoTag[];
 	task: TodoTask[];
 	completed: boolean;
+};
+
+export type SortTodoType =
+	| 'title-asc'
+	| 'title-desc'
+	| 'priority-desc'
+	| 'priority-asc'
+	| 'status-pending'
+	| 'status-completed'
+	| 'startDate-desc'
+	| 'startDate-asc'
+	| 'endDate-asc'
+	| 'endDate-desc';
+
+export type StatusType = 'all' | 'completed' | 'incompleted';
+
+export type FiltersType = {
+	title?: string;
+	status?: StatusType;
+	priority?: TodoPriority;
+	sort?: SortTodoType;
+	tags?: TodoTag[];
 };

@@ -12,7 +12,7 @@ export const TodoListBasic = (): JSX.Element => {
 	const [text, setText] = useState('');
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+		e.preventDefault();
 		if (!text.trim()) return;
 
 		const todo = {
@@ -26,14 +26,13 @@ export const TodoListBasic = (): JSX.Element => {
 	};
 
 	const handleDeleteTask = (id: number) => {
-    
 		setTodos((prev) => prev.filter((t) => t.id !== id));
 	};
 
 	return (
 		<div>
-      <form action='' onSubmit={handleSubmit}>
-        <label htmlFor="taskId">Tarea: </label>
+			<form action='' onSubmit={handleSubmit}>
+				<label htmlFor='taskId'>Tarea</label>
 				<input type='text' id='taskId' value={text} onChange={(e) => setText(e.target.value)} />
 				<button type='submit'>Añadir</button>
 			</form>
